@@ -1,0 +1,11 @@
+# ignore venv things
+/bin/
+/include/
+/lib/
+/lib64
+/share/
+pyvenv.cfg
+pip-selfcheck.json
+
+# ignore the pycharm configs
+/.idea/
