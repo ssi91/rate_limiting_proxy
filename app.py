@@ -1,22 +1,22 @@
+import argparse
 import asyncio
 
 from aiohttp import web, ClientSession
 
 from rate_limit import RLQ, rate_limit_middleware
-import argparse
 
 BASE_URL_TEMPLATE = "http://127.0.0.1:8001/{}"
 
 
-async def _response(method, path, params, body):
+async def _response(method, path, headers, params, body):
     session = ClientSession()
-    response = await session.request(method, BASE_URL_TEMPLATE.format(path), params=params, data=body)
+    response = await session.request(method, BASE_URL_TEMPLATE.format(path), params=params, data=body, headers=headers)
     session.close()
     return response
 
 
 async def index_view(request):
-    response = await _response(request.method, request.match_info['path'], request.query, await request.read())
+    response = await _response(request.method, request.match_info['path'], request.headers, request.query, await request.read())
     _headers = dict()
     for h in response.headers:
         if h not in ("Content-Encoding", "Transfer-Encoding"):  # exclude hop-by-hop headers
