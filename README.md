@@ -1,4 +1,4 @@
-Simple rate limiting proxy server
+Simple rate limiting proxy server  
 `python app.py -h`
 ```
 usage: app.py [-h] -b BASE_HOST -p PORT
